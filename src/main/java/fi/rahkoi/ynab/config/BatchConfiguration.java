@@ -58,13 +58,11 @@ public class BatchConfiguration {
     @Bean
     public FlatFileItemReader<DanskeRecord> danskeRecordFlatFileItemReader() {
         FlatFileItemReader<DanskeRecord> itemReader = new ResourceAwareFlatFileItemReader<>();
-        //itemReader.setEncoding("iso-8859-1");
         itemReader.setEncoding(inFileEncoding);
         itemReader.setLinesToSkip(1);
 
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
         lineTokenizer.setNames(inFileNames);
-        //lineTokenizer.setNames(new String[] {"Pvm", "Saaja/Maksaja", "Määrä", "Saldo", "Tila", "Tarkastus"});
 
         FieldSetMapper<DanskeRecord> fieldSetMapper = new DanskeRecordFieldSetMapper();
 
