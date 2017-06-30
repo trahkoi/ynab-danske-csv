@@ -9,5 +9,5 @@ Usage:
 ```
 mvn clean package
 chmod u+x runJob.sh
-./runJob.sh convert-to-ynab-record -inFile=<your dankske csv> -outFile=<path_to_out_file : will be created>
+./runJob.sh convert-to-ynab-record -inFile=<your danske csv> -outFile=<path_to_out_file : will be created>
 ```
