@@ -27,6 +27,7 @@ import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.support.CompositeItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -42,6 +43,12 @@ import java.util.List;
 @EnableBatchProcessing
 public class BatchConfiguration {
 
+    @Value("${inFile.encoding}")
+    private String inFileEncoding;
+
+    @Value("${inFile.names}")
+    private String[] inFileNames;
+
     @Autowired
     public JobBuilderFactory jobBuilderFactory;
 
@@ -51,11 +58,13 @@ public class BatchConfiguration {
     @Bean
     public FlatFileItemReader<DanskeRecord> danskeRecordFlatFileItemReader() {
         FlatFileItemReader<DanskeRecord> itemReader = new ResourceAwareFlatFileItemReader<>();
-        itemReader.setEncoding("iso-8859-1");
+        //itemReader.setEncoding("iso-8859-1");
+        itemReader.setEncoding(inFileEncoding);
         itemReader.setLinesToSkip(1);
 
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
-        lineTokenizer.setNames(new String[] {"Pvm", "Saaja/Maksaja", "Määrä", "Saldo", "Tila", "Tarkastus"});
+        lineTokenizer.setNames(inFileNames);
+        //lineTokenizer.setNames(new String[] {"Pvm", "Saaja/Maksaja", "Määrä", "Saldo", "Tila", "Tarkastus"});
 
         FieldSetMapper<DanskeRecord> fieldSetMapper = new DanskeRecordFieldSetMapper();
 
